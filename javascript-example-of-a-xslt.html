@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>XSLT Transformation</title>
+        <script>
+            function loadFileIntoVariable() {
+  fetch('file.txt')
+    .then(response => response.text())
+    .then(data => {
+      var fileContents = data;
+      xmlContent = fileContents;
+      
+      console.log(fileContents); // or do something else with the variable
+    })
+    .catch(error => {
+      console.error('Error loading file:', error);
+    });
+}
+    function performXSLT() {
+      var xmlContent = "<data><name>John</name><age>25</age></data>";
+      loadFileIntoVariable();
+      var xsltContent = "<xsl:stylesheet xmlns:xsl='http://www.w3.org/1999/XSL/Transform' xmlns:xs='http://www.w3.org/2001/XMLSchema' exclude-result-prefixes='xs' version='2.0'><xsl:template match='/data'><h1>Name: <xsl:value-of select='name'/></h1><h2>Age: <xsl:value-of select='age'/></h2></xsl:template></xsl:stylesheet>";
+
+      var parser = new DOMParser();
+      var xmlDoc = parser.parseFromString(xmlContent, "text/xml");
+      var xslDoc = parser.parseFromString(xsltContent, "text/xml");
+
+      var processor = new XSLTProcessor();
+      processor.importStylesheet(xslDoc);
+      var transformedDocument = processor.transformToDocument(xmlDoc);
+
+      var transformedString = new XMLSerializer().serializeToString(transformedDocument);
+      document.getElementById("resultDiv").innerHTML = transformedString;
+    }
+  </script>
+    </head>
+    <body>
+        <button onclick="performXSLT()">Perform XSLT Transformation</button>
+        <div id="resultDiv"></div>
+    </body>
+</html>

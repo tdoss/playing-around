@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Display HTML Contents</title>
+        <script>
+    function displayHTML() {
+      var htmlContent = "<h1>This is a heading</h1><p>This is a paragraph.</p>";
+      var displayDiv = document.getElementById("displayDiv");
+      displayDiv.innerHTML = htmlContent;
+    }
+  </script>
+    </head>
+    <body>
+        <button onclick="displayHTML()">Display HTML</button>
+        <div id="displayDiv"></div>
+    </body>
+</html>
